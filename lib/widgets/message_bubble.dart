@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Bubble extends StatelessWidget {
-  Bubble(this.message, this.isMe);
+  Bubble(
+    this.message,
+    this.isMe,
+    this.userId,
+    // this.key,
+  );
 
   final String message;
+  //final Key key;
   final bool isMe;
+  final String userId;
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +38,39 @@ class Bubble extends StatelessWidget {
             vertical: 4,
             horizontal: 8,
           ),
-          child: Text(
-            message,
-            style: TextStyle(
-                color: isMe
-                    ? Colors.black
-                    : Theme.of(context).accentTextTheme.headline1.color),
+          child: Column(
+            crossAxisAlignment:
+                !isMe ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+            children: <Widget>[
+              FutureBuilder(
+                future: Firestore.instance
+                    .collection('users')
+                    .document(userId)
+                    .get(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Text('..loading');
+                  }
+                  return Text(
+                    snapshot.data['username'],
+                    style: TextStyle(
+                      color: isMe
+                          ? Colors.black
+                          : Theme.of(context).accentTextTheme.headline1.color,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  );
+                },
+              ),
+              Text(
+                message,
+                textAlign: !isMe ? TextAlign.start : TextAlign.end,
+                style: TextStyle(
+                    color: isMe
+                        ? Colors.black
+                        : Theme.of(context).accentTextTheme.headline1.color),
+              ),
+            ],
           ),
         ),
       ],

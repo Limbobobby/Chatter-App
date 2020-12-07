@@ -31,12 +31,14 @@ class Messages extends StatelessWidget {
                 reverse: true,
                 itemCount: msgSnapShot.data.documents.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Bubble(
-                      msgSnapShot.data.documents[index]['text'],
-                      msgSnapShot.data.documents[index]['userId'] ==
-                          futureSnapShot.data.uid,
-                    ),
+                  return Bubble(
+                    msgSnapShot.data.documents[index]['text'],
+
+                    msgSnapShot.data.documents[index]['userId'] ==
+                        futureSnapShot.data.uid,
+                    msgSnapShot.data.documents[index]['userId'],
+
+                    //key: ValueKey(msgSnapShot.data.document[index].documentID),
                   );
                 });
           },
