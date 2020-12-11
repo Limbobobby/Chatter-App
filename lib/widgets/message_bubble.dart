@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:path/path.dart';
+//import 'package:path/path.dart';
 
 class Bubble extends StatelessWidget {
   Bubble(
@@ -44,7 +44,7 @@ class Bubble extends StatelessWidget {
                 horizontal: 16,
               ),
               margin: EdgeInsets.symmetric(
-                vertical: 4,
+                vertical: 15,
                 horizontal: 8,
               ),
               child: Column(
